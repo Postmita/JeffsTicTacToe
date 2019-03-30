@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="..\..\TicTacToe.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{BDEDF427-1E68-4198-B842-958334229597}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\TicTacToe.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\TicTacToeEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <Filter Include="Config">
+      <UniqueIdentifier>{9AE7B3AA-4B39-40AB-BA4A-66729A1CDCBD}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEditorPerProjectUserSettings.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultInput.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Source\TicTacToe">
+      <UniqueIdentifier>{B3C3C3F4-BFEE-4C2C-9BEA-BB7354FA7718}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\TicTacToe\TicTacToe.Build.cs">
+      <Filter>Source\TicTacToe</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\TicTacToe\TicTacToe.cpp">
+      <Filter>Source\TicTacToe</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\TicTacToe\TicTacToe.h">
+      <Filter>Source\TicTacToe</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\TicTacToe\TicTacToeBlock.cpp">
+      <Filter>Source\TicTacToe</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\TicTacToe\TicTacToeBlock.h">
+      <Filter>Source\TicTacToe</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\TicTacToe\TicTacToeBlockGrid.cpp">
+      <Filter>Source\TicTacToe</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\TicTacToe\TicTacToeBlockGrid.h">
+      <Filter>Source\TicTacToe</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\TicTacToe\TicTacToeGameMode.cpp">
+      <Filter>Source\TicTacToe</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\TicTacToe\TicTacToeGameMode.h">
+      <Filter>Source\TicTacToe</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\TicTacToe\TicTacToePawn.cpp">
+      <Filter>Source\TicTacToe</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\TicTacToe\TicTacToePawn.h">
+      <Filter>Source\TicTacToe</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\TicTacToe\TicTacToePlayerController.cpp">
+      <Filter>Source\TicTacToe</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\TicTacToe\TicTacToePlayerController.h">
+      <Filter>Source\TicTacToe</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
