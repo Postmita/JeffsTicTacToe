@@ -37,7 +37,9 @@ public:
 	/** Pointer to orange material used on active blocks */
 	UPROPERTY()
 	class UMaterialInstance* OrangeMaterial;
-
+	/** Pointer to the green material */
+	UPROPERTY()
+	class UMaterialInstance* GreenMaterial;
 	/** Grid that owns us */
 	UPROPERTY()
 	class ATicTacToeBlockGrid* OwningGrid;

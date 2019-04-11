@@ -7,29 +7,27 @@
 #include "Engine/StaticMesh.h"
 #include "Materials/MaterialInstance.h"
 
-ATicTacToeBlock::ATicTacToeBlock()
-{
+ATicTacToeBlock::ATicTacToeBlock() {
 	// Structure to hold one-time initialization
-	struct FConstructorStatics
-	{
+	struct FConstructorStatics 	{
 		ConstructorHelpers::FObjectFinderOptional<UStaticMesh> PlaneMesh;
 		ConstructorHelpers::FObjectFinderOptional<UMaterial> BaseMaterial;
 		ConstructorHelpers::FObjectFinderOptional<UMaterialInstance> BlueMaterial;
 		ConstructorHelpers::FObjectFinderOptional<UMaterialInstance> OrangeMaterial;
+		ConstructorHelpers::FObjectFinderOptional<UMaterialInstance> GreenMaterial;
 		FConstructorStatics()
 			: PlaneMesh(TEXT("/Game/Puzzle/Meshes/PuzzleCube.PuzzleCube"))
 			, BaseMaterial(TEXT("/Game/Puzzle/Meshes/BaseMaterial.BaseMaterial"))
 			, BlueMaterial(TEXT("/Game/Puzzle/Meshes/BlueMaterial.BlueMaterial"))
 			, OrangeMaterial(TEXT("/Game/Puzzle/Meshes/OrangeMaterial.OrangeMaterial"))
+			, GreenMaterial(TEXT("/Game/Puzzle/Meshes/GreenMaterial.GreenMaterial"))
 		{
 		}
 	};
 	static FConstructorStatics ConstructorStatics;
-
 	// Create dummy root scene component
 	DummyRoot = CreateDefaultSubobject<USceneComponent>(TEXT("Dummy0"));
 	RootComponent = DummyRoot;
-
 	// Create static mesh component
 	BlockMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BlockMesh0"));
 	BlockMesh->SetStaticMesh(ConstructorStatics.PlaneMesh.Get());
@@ -39,56 +37,50 @@ ATicTacToeBlock::ATicTacToeBlock()
 	BlockMesh->SetupAttachment(DummyRoot);
 	BlockMesh->OnClicked.AddDynamic(this, &ATicTacToeBlock::BlockClicked);
 	BlockMesh->OnInputTouchBegin.AddDynamic(this, &ATicTacToeBlock::OnFingerPressedBlock);
-
 	// Save a pointer to the orange material
 	BaseMaterial = ConstructorStatics.BaseMaterial.Get();
 	BlueMaterial = ConstructorStatics.BlueMaterial.Get();
 	OrangeMaterial = ConstructorStatics.OrangeMaterial.Get();
+	GreenMaterial = ConstructorStatics.GreenMaterial.Get();
 }
 
-void ATicTacToeBlock::BlockClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked)
-{
+void ATicTacToeBlock::BlockClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked) {
 	HandleClicked();
 }
 
-
-void ATicTacToeBlock::OnFingerPressedBlock(ETouchIndex::Type FingerIndex, UPrimitiveComponent* TouchedComponent)
-{
+void ATicTacToeBlock::OnFingerPressedBlock(ETouchIndex::Type FingerIndex, UPrimitiveComponent* TouchedComponent) {
 	HandleClicked();
 }
 
-void ATicTacToeBlock::HandleClicked()
-{
+void ATicTacToeBlock::HandleClicked() {
 	// Check we are not already active
-	if (!bIsActive)
-	{
+	if (!bIsActive) {
 		bIsActive = true;
-
 		// Change material
-		BlockMesh->SetMaterial(0, OrangeMaterial);
-
+		if (OwningGrid != nullptr) {
+			if (OwningGrid->Score % 2 == 0) {
+				BlockMesh->SetMaterial(0, OrangeMaterial);
+				this->Tags.AddUnique(TEXT("X"));
+			}
+			else {
+				BlockMesh->SetMaterial(0, GreenMaterial);
+				this->Tags.AddUnique(TEXT("O"));
+			}
 		// Tell the Grid
-		if (OwningGrid != nullptr)
-		{
 			OwningGrid->AddScore();
 		}
 	}
 }
 
-void ATicTacToeBlock::Highlight(bool bOn)
-{
+void ATicTacToeBlock::Highlight(bool bOn) {
 	// Do not highlight if the block has already been activated.
-	if (bIsActive)
-	{
+	if (bIsActive) {
 		return;
 	}
-
-	if (bOn)
-	{
+	if (bOn) {
 		BlockMesh->SetMaterial(0, BaseMaterial);
 	}
-	else
-	{
+	else {
 		BlockMesh->SetMaterial(0, BlueMaterial);
 	}
 }

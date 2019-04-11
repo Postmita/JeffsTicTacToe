@@ -33,6 +33,7 @@ public:
 	/** Spacing of blocks */
 	UPROPERTY(Category=Grid, EditAnywhere, BlueprintReadOnly)
 	float BlockSpacing;
+	//TArray<AActor> Blocks;
 
 protected:
 	// Begin AActor interface
@@ -43,6 +44,8 @@ public:
 
 	/** Handle the block being clicked */
 	void AddScore();
+	//Check if the game is over.
+	void CheckIfWinner();
 
 	/** Returns DummyRoot subobject **/
 	FORCEINLINE class USceneComponent* GetDummyRoot() const { return DummyRoot; }
