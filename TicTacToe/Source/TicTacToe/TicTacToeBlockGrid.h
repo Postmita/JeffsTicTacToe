@@ -20,6 +20,7 @@ class ATicTacToeBlockGrid : public AActor
 	UPROPERTY(Category = Grid, VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class UTextRenderComponent* ScoreText;
 
+
 public:
 	ATicTacToeBlockGrid();
 
@@ -33,7 +34,7 @@ public:
 	/** Spacing of blocks */
 	UPROPERTY(Category=Grid, EditAnywhere, BlueprintReadOnly)
 	float BlockSpacing;
-	//TArray<AActor> Blocks;
+	
 
 protected:
 	// Begin AActor interface

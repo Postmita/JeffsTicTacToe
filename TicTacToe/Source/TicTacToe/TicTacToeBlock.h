@@ -24,8 +24,12 @@ public:
 	ATicTacToeBlock();
 
 	/** Are we currently active? */
+	UPROPERTY(VisibleAnywhere)
 	bool bIsActive;
-
+	UPROPERTY(VisibleAnywhere)
+	bool bIsX;
+	UPROPERTY(VisibleAnywhere)
+	bool bIsO;
 	/** Pointer to white material used on the focused block */
 	UPROPERTY()
 	class UMaterial* BaseMaterial;

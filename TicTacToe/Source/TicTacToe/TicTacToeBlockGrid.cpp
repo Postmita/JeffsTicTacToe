@@ -4,6 +4,7 @@
 #include "TicTacToeBlock.h"
 #include "Components/TextRenderComponent.h"
 #include "Engine/World.h"
+#include "Kismet/GameplayStatics.h"
 
 #define LOCTEXT_NAMESPACE "PuzzleBlockGrid"
 
@@ -15,7 +16,7 @@ ATicTacToeBlockGrid::ATicTacToeBlockGrid() {
 	ScoreText = CreateDefaultSubobject<UTextRenderComponent>(TEXT("ScoreText0"));
 	ScoreText->SetRelativeLocation(FVector(200.f,0.f,0.f));
 	ScoreText->SetRelativeRotation(FRotator(90.f,0.f,0.f));
-	ScoreText->SetText("X's turn");
+	ScoreText->SetText("Orange's turn");
 	ScoreText->SetupAttachment(DummyRoot);
 	// Set defaults
 	Size = 3;
@@ -38,8 +39,7 @@ void ATicTacToeBlockGrid::BeginPlay() {
 		ATicTacToeBlock* NewBlock = GetWorld()->SpawnActor<ATicTacToeBlock>(BlockLocation, FRotator(0,0,0));
 		// Tell the block about its owner
 		if (NewBlock != nullptr) {
-			NewBlock->OwningGrid = this;
-			
+			NewBlock->OwningGrid = this;			
 			// Add the block to the array.
 			//Blocks.Add(NewBlock);
 		}
@@ -49,10 +49,19 @@ void ATicTacToeBlockGrid::BeginPlay() {
 void ATicTacToeBlockGrid::CheckIfWinner() {
 	UE_LOG(LogTemp, Warning, TEXT("Checking If Winner."));
 	// Check 0 1 2, 3 4 5, 6 7 8, 0 3 6, 1 4 7, 2 5 8, 2 4 6, 0 4 8 for winning.
-	//if (Blocks[0]->ActorHasTag(TEXT("X")) && Blocks[1]->ActorHasTag(TEXT("X")) && Blocks[2]->ActorHasTag(TEXT("X"))) {
-		ScoreText->SetText("X wins!");
-	//}
-	
+	TArray<AActor*> FoundActors;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATicTacToeBlock::StaticClass(), FoundActors);
+	UE_LOG(LogTemp, Warning, TEXT("Got all actors"));
+	for (AActor* Actor : FoundActors) {
+		ATicTacToeBlock* block = static_cast<ATicTacToeBlock*>(Actor);
+		/** Your code */
+		if (block->bIsX) {
+			UE_LOG(LogTemp, Warning, TEXT("Block is X."));
+		}
+		if (block->bIsO) {
+			UE_LOG(LogTemp, Warning, TEXT("Block is O."));
+		}
+	}	
 }
 
 void ATicTacToeBlockGrid::AddScore() {
@@ -66,7 +75,7 @@ void ATicTacToeBlockGrid::AddScore() {
 		ScoreText->SetText("Green's turn");
 	}
 	//ScoreText->SetText(FText::Format(LOCTEXT("ScoreFmt", "Score: {0}"), FText::AsNumber(Score)));
-	//CheckIfWinner();
+	CheckIfWinner();
 }
 
 #undef LOCTEXT_NAMESPACE

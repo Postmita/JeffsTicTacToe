@@ -61,10 +61,12 @@ void ATicTacToeBlock::HandleClicked() {
 			if (OwningGrid->Score % 2 == 0) {
 				BlockMesh->SetMaterial(0, OrangeMaterial);
 				this->Tags.AddUnique(TEXT("X"));
+				bIsX = true;
 			}
 			else {
 				BlockMesh->SetMaterial(0, GreenMaterial);
 				this->Tags.AddUnique(TEXT("O"));
+				bIsO = true;
 			}
 		// Tell the Grid
 			OwningGrid->AddScore();
