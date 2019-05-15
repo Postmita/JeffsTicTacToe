@@ -52,17 +52,96 @@ void ATicTacToeBlockGrid::CheckIfWinner() {
 	TArray<AActor*> FoundActors;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATicTacToeBlock::StaticClass(), FoundActors);
 	UE_LOG(LogTemp, Warning, TEXT("Got all actors"));
+	TArray<ATicTacToeBlock*> blocks;
 	for (AActor* Actor : FoundActors) {
 		ATicTacToeBlock* block = static_cast<ATicTacToeBlock*>(Actor);
-		/** Your code */
-		if (block->bIsX) {
-			UE_LOG(LogTemp, Warning, TEXT("Block is X."));
-		}
-		if (block->bIsO) {
-			UE_LOG(LogTemp, Warning, TEXT("Block is O."));
-		}
-	}	
+		blocks.Add(block);				
+	}
+	// Orange check.
+	if (blocks[0]->bIsX && blocks[1]->bIsX && blocks[2]->bIsX) {
+		ScoreText->SetText("ORANGE WINS!");
+	}
+	if (blocks[3]->bIsX && blocks[4]->bIsX && blocks[5]->bIsX) {
+		ScoreText->SetText("ORANGE WINS!");
+	}
+	if (blocks[6]->bIsX && blocks[7]->bIsX && blocks[8]->bIsX) {
+		ScoreText->SetText("ORANGE WINS!");
+	}
+	if (blocks[0]->bIsX && blocks[3]->bIsX && blocks[6]->bIsX) {
+		ScoreText->SetText("ORANGE WINS!");
+	}
+	if (blocks[1]->bIsX && blocks[4]->bIsX && blocks[7]->bIsX) {
+		ScoreText->SetText("ORANGE WINS!");
+	}
+	if (blocks[2]->bIsX && blocks[5]->bIsX && blocks[8]->bIsX) {
+		ScoreText->SetText("ORANGE WINS!");
+	}
+	if (blocks[2]->bIsX && blocks[4]->bIsX && blocks[6]->bIsX) {
+		ScoreText->SetText("ORANGE WINS!");
+	}
+	if (blocks[0]->bIsX && blocks[4]->bIsX && blocks[8]->bIsX) {
+		ScoreText->SetText("ORANGE WINS!");
+	}
+	// Green check. 0 1 2, 3 4 5, 6 7 8, 0 3 6, 1 4 7, 2 5 8, 2 4 6, 0 4 8
+	if (blocks[0]->bIsO && blocks[1]->bIsO && blocks[2]->bIsO) {
+		ScoreText->SetText("GREEN WINS!");
+	}
+	if (blocks[3]->bIsO && blocks[4]->bIsO && blocks[5]->bIsO) {
+		ScoreText->SetText("GREEN WINS!");
+	}
+	if (blocks[6]->bIsO && blocks[7]->bIsO && blocks[8]->bIsO) {
+		ScoreText->SetText("GREEN WINS!");
+	}
+	if (blocks[0]->bIsO && blocks[3]->bIsO && blocks[6]->bIsO) {
+		ScoreText->SetText("GREEN WINS!");
+	}
+	if (blocks[1]->bIsO && blocks[4]->bIsO && blocks[7]->bIsO) {
+		ScoreText->SetText("GREEN WINS!");
+	}
+	if (blocks[2]->bIsO && blocks[5]->bIsO && blocks[8]->bIsO) {
+		ScoreText->SetText("GREEN WINS!");
+	}
+	if (blocks[2]->bIsO && blocks[4]->bIsO && blocks[6]->bIsO) {
+		ScoreText->SetText("GREEN WINS!");
+	}
+	if (blocks[0]->bIsO && blocks[4]->bIsO && blocks[8]->bIsO) {
+		ScoreText->SetText("GREEN WINS!");
+	}
 }
+
+//int checkwin() {
+//	if (square[1] == square[2] && square[2] == square[3])
+//
+//		return 1;
+//	else if (square[4] == square[5] && square[5] == square[6])
+//
+//		return 1;
+//	else if (square[7] == square[8] && square[8] == square[9])
+//
+//		return 1;
+//	else if (square[1] == square[4] && square[4] == square[7])
+//
+//		return 1;
+//	else if (square[2] == square[5] && square[5] == square[8])
+//
+//		return 1;
+//	else if (square[3] == square[6] && square[6] == square[9])
+//
+//		return 1;
+//	else if (square[1] == square[5] && square[5] == square[9])
+//
+//		return 1;
+//	else if (square[3] == square[5] && square[5] == square[7])
+//
+//		return 1;
+//	else if (square[1] != '1' && square[2] != '2' && square[3] != '3'
+//		&& square[4] != '4' && square[5] != '5' && square[6] != '6'
+//		&& square[7] != '7' && square[8] != '8' && square[9] != '9')
+//
+//		return 0;
+//	else
+//		return -1;
+//}
 
 void ATicTacToeBlockGrid::AddScore() {
 	// Increment score
