@@ -30,6 +30,8 @@ public:
 	bool bIsX;
 	UPROPERTY(VisibleAnywhere)
 	bool bIsO;
+	UPROPERTY(VisibleAnywhere)
+	int id;
 	/** Pointer to white material used on the focused block */
 	UPROPERTY()
 	class UMaterial* BaseMaterial;

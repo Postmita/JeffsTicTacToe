@@ -35,6 +35,7 @@ public:
 	UPROPERTY(Category=Grid, EditAnywhere, BlueprintReadOnly)
 	float BlockSpacing;
 	
+	bool isOver;
 
 protected:
 	// Begin AActor interface

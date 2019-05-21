@@ -21,7 +21,7 @@ ATicTacToeBlockGrid::ATicTacToeBlockGrid() {
 	// Set defaults
 	Size = 3;
 	BlockSpacing = 300.f;
-	
+	isOver = false;
 }
 
 
@@ -36,12 +36,11 @@ void ATicTacToeBlockGrid::BeginPlay() {
 		// Make position vector, offset from Grid location
 		const FVector BlockLocation = FVector(XOffset, YOffset, 0.f) + GetActorLocation();
 		// Spawn a block
-		ATicTacToeBlock* NewBlock = GetWorld()->SpawnActor<ATicTacToeBlock>(BlockLocation, FRotator(0,0,0));
+		ATicTacToeBlock* NewBlock = GetWorld()->SpawnActor<ATicTacToeBlock>(BlockLocation, FRotator(0,0,0));		
 		// Tell the block about its owner
 		if (NewBlock != nullptr) {
 			NewBlock->OwningGrid = this;			
-			// Add the block to the array.
-			//Blocks.Add(NewBlock);
+			NewBlock->id = BlockIndex;			
 		}
 	}
 }
@@ -53,95 +52,93 @@ void ATicTacToeBlockGrid::CheckIfWinner() {
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATicTacToeBlock::StaticClass(), FoundActors);
 	UE_LOG(LogTemp, Warning, TEXT("Got all actors"));
 	TArray<ATicTacToeBlock*> blocks;
+	
 	for (AActor* Actor : FoundActors) {
 		ATicTacToeBlock* block = static_cast<ATicTacToeBlock*>(Actor);
 		blocks.Add(block);				
 	}
+	blocks.Sort();
 	// Orange check.
 	if (blocks[0]->bIsX && blocks[1]->bIsX && blocks[2]->bIsX) {
 		ScoreText->SetText("ORANGE WINS!");
+		isOver = true;
 	}
 	if (blocks[3]->bIsX && blocks[4]->bIsX && blocks[5]->bIsX) {
 		ScoreText->SetText("ORANGE WINS!");
+		isOver = true;
 	}
 	if (blocks[6]->bIsX && blocks[7]->bIsX && blocks[8]->bIsX) {
 		ScoreText->SetText("ORANGE WINS!");
+		isOver = true;
 	}
 	if (blocks[0]->bIsX && blocks[3]->bIsX && blocks[6]->bIsX) {
 		ScoreText->SetText("ORANGE WINS!");
+		isOver = true;
 	}
 	if (blocks[1]->bIsX && blocks[4]->bIsX && blocks[7]->bIsX) {
 		ScoreText->SetText("ORANGE WINS!");
+		isOver = true;
 	}
 	if (blocks[2]->bIsX && blocks[5]->bIsX && blocks[8]->bIsX) {
 		ScoreText->SetText("ORANGE WINS!");
+		isOver = true;
 	}
 	if (blocks[2]->bIsX && blocks[4]->bIsX && blocks[6]->bIsX) {
 		ScoreText->SetText("ORANGE WINS!");
+		isOver = true;
 	}
 	if (blocks[0]->bIsX && blocks[4]->bIsX && blocks[8]->bIsX) {
 		ScoreText->SetText("ORANGE WINS!");
+		isOver = true;
 	}
 	// Green check. 0 1 2, 3 4 5, 6 7 8, 0 3 6, 1 4 7, 2 5 8, 2 4 6, 0 4 8
 	if (blocks[0]->bIsO && blocks[1]->bIsO && blocks[2]->bIsO) {
 		ScoreText->SetText("GREEN WINS!");
+		isOver = true;
 	}
 	if (blocks[3]->bIsO && blocks[4]->bIsO && blocks[5]->bIsO) {
 		ScoreText->SetText("GREEN WINS!");
+		isOver = true;
 	}
 	if (blocks[6]->bIsO && blocks[7]->bIsO && blocks[8]->bIsO) {
 		ScoreText->SetText("GREEN WINS!");
+		isOver = true;
 	}
 	if (blocks[0]->bIsO && blocks[3]->bIsO && blocks[6]->bIsO) {
 		ScoreText->SetText("GREEN WINS!");
+		isOver = true;
 	}
 	if (blocks[1]->bIsO && blocks[4]->bIsO && blocks[7]->bIsO) {
 		ScoreText->SetText("GREEN WINS!");
+		isOver = true;
 	}
 	if (blocks[2]->bIsO && blocks[5]->bIsO && blocks[8]->bIsO) {
 		ScoreText->SetText("GREEN WINS!");
+		isOver = true;
 	}
 	if (blocks[2]->bIsO && blocks[4]->bIsO && blocks[6]->bIsO) {
 		ScoreText->SetText("GREEN WINS!");
+		isOver = true;
 	}
 	if (blocks[0]->bIsO && blocks[4]->bIsO && blocks[8]->bIsO) {
 		ScoreText->SetText("GREEN WINS!");
+		isOver = true;
+	}
+
+	// check if all clicked.
+	if (blocks[0]->bIsActive && blocks[1]->bIsActive && blocks[2]->bIsActive
+		&& blocks[3]->bIsActive && blocks[4]->bIsActive && blocks[5]->bIsActive
+		&& blocks[6]->bIsActive && blocks[7]->bIsActive && blocks[8]->bIsActive) {
+		isOver = true;
+	}
+
+	if (isOver) {
+		// implement a timer.
+		//FTimerHandle UnusedHandle;
+		UE_LOG(LogTemp, Warning, TEXT("Winner."));
+		UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
 	}
 }
-
-//int checkwin() {
-//	if (square[1] == square[2] && square[2] == square[3])
-//
-//		return 1;
-//	else if (square[4] == square[5] && square[5] == square[6])
-//
-//		return 1;
-//	else if (square[7] == square[8] && square[8] == square[9])
-//
-//		return 1;
-//	else if (square[1] == square[4] && square[4] == square[7])
-//
-//		return 1;
-//	else if (square[2] == square[5] && square[5] == square[8])
-//
-//		return 1;
-//	else if (square[3] == square[6] && square[6] == square[9])
-//
-//		return 1;
-//	else if (square[1] == square[5] && square[5] == square[9])
-//
-//		return 1;
-//	else if (square[3] == square[5] && square[5] == square[7])
-//
-//		return 1;
-//	else if (square[1] != '1' && square[2] != '2' && square[3] != '3'
-//		&& square[4] != '4' && square[5] != '5' && square[6] != '6'
-//		&& square[7] != '7' && square[8] != '8' && square[9] != '9')
-//
-//		return 0;
-//	else
-//		return -1;
-//}
 
 void ATicTacToeBlockGrid::AddScore() {
 	// Increment score
@@ -156,5 +153,6 @@ void ATicTacToeBlockGrid::AddScore() {
 	//ScoreText->SetText(FText::Format(LOCTEXT("ScoreFmt", "Score: {0}"), FText::AsNumber(Score)));
 	CheckIfWinner();
 }
+
 
 #undef LOCTEXT_NAMESPACE
