@@ -5,6 +5,7 @@
 #include "Components/TextRenderComponent.h"
 #include "Engine/World.h"
 #include "Kismet/GameplayStatics.h"
+#include "TimerManager.h"
 
 #define LOCTEXT_NAMESPACE "PuzzleBlockGrid"
 
@@ -134,10 +135,14 @@ void ATicTacToeBlockGrid::CheckIfWinner() {
 
 	if (isOver) {
 		// implement a timer.
-		//FTimerHandle UnusedHandle;
-		UE_LOG(LogTemp, Warning, TEXT("Winner."));
-		UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
+		FTimerHandle UnusedHandle;
+		GetWorldTimerManager().SetTimer(UnusedHandle, this, &ATicTacToeBlockGrid::ResetGame, 2, false);
+		UE_LOG(LogTemp, Warning, TEXT("Winner."));		
 	}
+}
+
+void ATicTacToeBlockGrid::ResetGame() {
+	UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
 }
 
 void ATicTacToeBlockGrid::AddScore() {

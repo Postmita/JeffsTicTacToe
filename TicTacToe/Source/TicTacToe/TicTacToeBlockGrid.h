@@ -48,7 +48,8 @@ public:
 	void AddScore();
 	//Check if the game is over.
 	void CheckIfWinner();
-
+	// Reset the game.
+	void ResetGame();
 	/** Returns DummyRoot subobject **/
 	FORCEINLINE class USceneComponent* GetDummyRoot() const { return DummyRoot; }
 	/** Returns ScoreText subobject **/
